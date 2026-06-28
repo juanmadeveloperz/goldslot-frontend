@@ -57,7 +57,6 @@ export default function AlumnosGestion() {
         );
       } else {
         await alumnoService.crearAlumno(
-          user.id,
           formData.nombre,
           formData.tipoLicencia
         );
