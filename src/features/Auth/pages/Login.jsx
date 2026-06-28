@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/authStore';
+import { authService } from '../services/authService';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 
@@ -8,10 +9,11 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const { login } = useAuthStore();
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -20,10 +22,16 @@ export default function Login() {
       return;
     }
 
-    // Mock login (después conectamos con backend)
-    const user = { id: 1, email, name: 'Profesor' };
-    login(user, 'fake-token-123');
-    navigate('/dashboard');
+    setLoading(true);
+    try {
+      const response = await authService.login(email, password);
+      login(response, response.token);
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Error al iniciar sesión');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -39,6 +47,7 @@ export default function Login() {
               placeholder="correo@ejemplo.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              disabled={loading}
             />
           </div>
 
@@ -49,13 +58,14 @@ export default function Login() {
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              disabled={loading}
             />
           </div>
 
           {error && <p className="text-red-600 text-sm">{error}</p>}
 
-          <Button type="submit" className="w-full">
-            Inicia sesión
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? 'Iniciando sesión...' : 'Inicia sesión'}
           </Button>
         </form>
 

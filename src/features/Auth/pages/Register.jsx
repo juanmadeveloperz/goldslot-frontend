@@ -43,7 +43,7 @@ export default function Register() {
         formData.password,
         formData.name
       );
-      login(response.user, response.token);
+      login(response, response.token);
       navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Error al registrarse');

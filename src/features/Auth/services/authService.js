@@ -12,14 +12,13 @@ export const authService = {
   },
 
   register: async (email, password, name) => {
-    const response = await axios.post(`${API_BASE_URL}/usuarios`, {
-      email,
-      password,
-      nombreEscuela: name,
-      plan: 'free',
-    });
-    return { user: response.data, token: 'temp-token' };
-  },
+  const response = await axios.post(`${API_BASE_URL}/auth/register`, {
+    email,
+    password,
+    nombreEscuela: name,
+  });
+  return response.data; // { id, email, nombreEscuela, token }
+},
 
   logout: async () => {
     return Promise.resolve();

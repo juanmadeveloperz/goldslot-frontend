@@ -20,14 +20,15 @@ export const alumnoService = {
     return response.data;
   },
 
-  crearAlumno: async (usuarioId, nombre, tipoLicencia) => {
-    const response = await apiClient.post(`/alumnos`, {
-      usuarioId,
-      nombre,
-      tipoLicencia,
-    });
-    return response.data;
-  },
+  crearAlumno: async (nombre, tipoLicencia) => {
+     const usuarioId = localStorage.getItem('usuarioId');
+     const response = await apiClient.post(`/alumnos`, {
+       usuarioId,
+       nombre,
+       tipoLicencia,
+     });
+     return response.data;
+   },
 
   actualizarAlumno: async (alumnoId, nombre, tipoLicencia) => {
     const response = await apiClient.put(`/alumnos/${alumnoId}`, {

@@ -5,10 +5,11 @@ export const useAuthStore = create((set) => ({
   token: localStorage.getItem('token') || null,
 
   login: (userData, tokenData) => {
-    localStorage.setItem('user', JSON.stringify(userData));
-    localStorage.setItem('token', tokenData);
-    set({ user: userData, token: tokenData });
-  },
+  localStorage.setItem('user', JSON.stringify(userData));
+  localStorage.setItem('token', tokenData);
+  localStorage.setItem('usuarioId', userData.id); // ← AGREGA ESTO
+  set({ user: userData, token: tokenData });
+},
 
   logout: () => {
     localStorage.removeItem('user');
