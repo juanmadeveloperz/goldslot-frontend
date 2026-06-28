@@ -211,6 +211,7 @@ export default function AlumnosGestion() {
             <option value="B">B - Coche</option>
             <option value="C">C - Camión</option>
             <option value="A">A - Moto</option>
+            <option value="A2">A2 - Moto</option>
           </select>
           <div className="flex gap-2">
             <Button

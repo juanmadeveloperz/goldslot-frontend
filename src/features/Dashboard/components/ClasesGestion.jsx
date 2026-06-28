@@ -56,7 +56,7 @@ export default function ClasesGestion() {
   }, [user?.id]);
 
   const guardar = async () => {
-    if (!formData.alumnoId || !formData.fecha || !formData.descripcion) {
+    if (!formData.alumnoId || !formData.fecha) {
       setMensaje('Completa todos los campos');
       setTimeout(() => setMensaje(''), 3000);
       return;
